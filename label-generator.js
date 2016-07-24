@@ -1,17 +1,30 @@
 /**
- *
+ * The LabelGenerator generates a random multipart label.
  */
 class LabelGenerator {
-    static generate(matrix = this.wordMatrix) {
-        var name = "";
-        // TODO: beautify this code
-        for(var i = 0; i < matrix.length; i++) {
-            name += matrix[i][ Math.floor(matrix[i].length * Math.random())];
-        }
-        return name;
+    /**
+     * Takes a list of lists as argument and randomly chooses one element of each list.
+     * Then, the chosen elements are concatenated.
+     * @param {Array} [matrix=this._wordMatrix] - A list of lists of Strings.
+     * @returns {string} the randomly generated label.
+     * @example
+     * const label = LabelGenerator.generate([
+     *   ['Hello', 'World'],
+     *   ['Foo', 'Bar'],
+     *   ['Blub', 'Baz']
+     * ]);
+     * label; // e.g. 'HelloBarBaz'
+     */
+    static generate(matrix = this._wordMatrix) {
+        return matrix
+            .map(list => list[Math.floor(list.length * Math.random())])
+            .join('');
     }
 
-    static get wordMatrix() {
+    /**
+     * @private
+     */
+    static get _wordMatrix() {
         return [
             ["Threadsafe", "Optimized", "Stable", "Automatic", "Abstract", "Serializable", "Writable",
                 "Readable", "Executable", "Nonblocking", "Scriptable", "Smart", "Basic", "Checked",
