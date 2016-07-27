@@ -10,17 +10,27 @@
  *
  * You may want to use <em>createXML()</em>, <em>download()</em>, or <em>copyInto()</em> to access the generated xml.
  **/
+let baseGenerators = {
+  halsteadComplexity: new ValueGenerator(ValueGenerator.linearDistribution(0, 1)),
+  cyclomaticComplexity: new ValueGenerator(ValueGenerator.linearDistribution(2, 5)),
+
+  color: new OrdinalGenerator(),
+  status: new OrdinalGenerator(OrdinalGenerator.examples.status),
+  severity: new OrdinalGenerator(OrdinalGenerator.examples.severity),
+  type: new OrdinalGenerator(OrdinalGenerator.examples.type)
+};
 
 class TreeGenerator {
-  constructor(bundleView, layerCount = 2, nodeCount = 50, relationCount = 100) {
-    this.layerCount    = layerCount;
-    this.nodeCount     = Math.max(nodeCount, layerCount);
+  constructor(layerCount = 2, nodeCount = 50, relationCount = 100, attributeGenerators = baseGenerators) {
+    this.layerCount = layerCount;
+    this.nodeCount = Math.max(nodeCount, layerCount);
     this.relationCount = relationCount;
+    this.attributeGenerators = attributeGenerators;
     this.nodes_per_level = this.nodesPerLevel();
 
     console.log(this.nodes_per_level);
 
-    this.bundleView    = bundleView || this.initBundleView();
+    this.bundleView = this.initBundleView();
   }
 
   initBundleView() {
@@ -37,7 +47,15 @@ class TreeGenerator {
 
     if ( LabelGenerator !== undefined ) {
       for( var i = 0; i < bundleView._nodes.length; i++) {
-        bundleView._nodes[i]._label = LabelGenerator.generate();
+        let node = bundleView._nodes[i];
+        node._label = LabelGenerator.generate();
+        if(node.isLeaf()) {
+          Object.keys(this.attributeGenerators).forEach((attributeName) => {
+            console.log(attributeName);
+            let generator = this.attributeGenerators[attributeName].generate();
+            node.setAttribute(attributeName, generator);
+          });
+        }
       }
     }
 
@@ -124,17 +142,38 @@ class TreeGenerator {
       }
     }
 
-    function appendRecursively(node, parentDesc) {
-
+    function convertToRelationDesc(relation) {
+      return {
+        source: relation.from.id,
+        target: relation.to.id
+      }
     }
 
-    let rootDesc = createNodeDesc();
-    let topNodes = this.bundleView.nodes().filter(node => node.parent() === undefined);
+    let nodeId = 1;
 
+    function appendRecursively(node, parentDesc) {
+      let nodeDesc = createNodeDesc();
+      nodeDesc.label = node.label();
+      nodeDesc.id = node.id = nodeId++;
+      Object.keys(node._attributes).forEach(attributeName => {
+        nodeDesc[attributeName] = node._attributes[attributeName];
+      });
+      parentDesc.children.push(nodeDesc);
+
+      node.children().forEach(child => appendRecursively(child, nodeDesc));
+    }
+
+    let rootNodeDesc = createNodeDesc();
+    this.bundleView.nodes()
+        .filter(node => node.parent() === undefined)
+        .forEach(node => appendRecursively(node, rootNodeDesc));
+
+    let relations = this.bundleView.relations()
+        .map(convertToRelationDesc);
 
     return {
-      nodes: rootDesc,
-      relations: []
+      nodes: rootNodeDesc,
+      relations
     };
   }
 
@@ -153,4 +192,3 @@ class TreeGenerator {
     $(domElement).html(this);
   }
 }
-

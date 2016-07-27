@@ -9,7 +9,22 @@ const label = LabelGenerator.generate([
     ['Hello', 'World'],
     ['Foo', 'Bar'],
     ['Blub', 'Baz']
- ]);
+]);
 console.log( label); // e.g. 'HelloBarBaz'
 
-console.log(new TreeGenerator().createJSON());
+let ordGen = new OrdinalGenerator();
+for(let i = 0; i < 20; i++) {
+    console.log(ordGen.generate());
+}
+
+let valGen = new ValueGenerator(ValueGenerator.linearDistribution(3,6));
+for(let i = 0; i < 20; i++) {
+    console.log(valGen.generate());
+}
+
+console.log(
+    JSON.stringify(
+        new TreeGenerator(undefined, undefined, 0)
+            .createJSON()
+    )
+);

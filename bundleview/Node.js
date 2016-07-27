@@ -238,6 +238,9 @@ BundleView.Node.prototype.tooltipText = function() {
 BundleView.Node.prototype.attribute = function( name ) {
   return this._attributes[name];
 }
+BundleView.Node.prototype.setAttribute = function( name, value ) {
+  return this._attributes[name] = value;
+}
 BundleView.Node.prototype.tooSmall = function() {
   var nodePadding, startAngle, endAngle;
   nodePadding = this.bundleView().nodePadding() / 2;
