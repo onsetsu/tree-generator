@@ -138,14 +138,16 @@ class TreeGenerator {
   createJSON() {
     function createNodeDesc() {
       return {
-        children: []
+        children: [],
+        attributes: {}
       }
     }
 
     function convertToRelationDesc(relation) {
       return {
         source: relation.from.id,
-        target: relation.to.id
+        target: relation.to.id,
+        attributes: {}
       }
     }
 
@@ -156,7 +158,7 @@ class TreeGenerator {
       nodeDesc.label = node.label();
       nodeDesc.id = node.id = nodeId++;
       Object.keys(node._attributes).forEach(attributeName => {
-        nodeDesc[attributeName] = node._attributes[attributeName];
+        nodeDesc.attributes[attributeName] = node._attributes[attributeName];
       });
       parentDesc.children.push(nodeDesc);
 
