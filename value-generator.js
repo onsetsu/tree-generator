@@ -1,7 +1,7 @@
 /**
  * The ValueGenerator generates numbers according to the given distribution.
  */
-class ValueGenerator {
+export class ValueGenerator {
     constructor(distribution = ValueGenerator.linearDistribution(0, 1)) {
         this.distribution = distribution;
     }
@@ -15,7 +15,7 @@ class ValueGenerator {
     }
 }
 
-class OrdinalGenerator {
+export class OrdinalGenerator {
     constructor(searchSpace = OrdinalGenerator.examples.colors) {
         this.searchSpace = searchSpace;
     }

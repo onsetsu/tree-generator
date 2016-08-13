@@ -6,6 +6,7 @@
 * A relation takes the BundleView it belongs to and the start-node and
 * end-node as parameters on initialization.
 **/
+import BundleView from './BundleView.js';
 
 BundleView.Relation = function( bundleView, from, to) {
 

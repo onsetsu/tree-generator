@@ -10,6 +10,17 @@
  *
  * You may want to use <em>createXML()</em>, <em>download()</em>, or <em>copyInto()</em> to access the generated xml.
  **/
+import LabelGenerator from './label-generator.js';
+import {OrdinalGenerator, ValueGenerator} from './value-generator.js';
+
+export {default as LabelGenerator} from './label-generator.js';
+export {OrdinalGenerator, ValueGenerator} from './value-generator.js';
+
+import BundleView from './bundleview/BundleView.js';
+import './bundleview/Node.js';
+import './bundleview/Layer.js';
+import './bundleview/Relation.js';
+
 let baseGenerators = {
   halsteadComplexity: new ValueGenerator(ValueGenerator.linearDistribution(0, 1)),
   cyclomaticComplexity: new ValueGenerator(ValueGenerator.linearDistribution(2, 5)),
@@ -20,7 +31,7 @@ let baseGenerators = {
   type: new OrdinalGenerator(OrdinalGenerator.examples.type)
 };
 
-class TreeGenerator {
+export default class TreeGenerator {
   constructor(layerCount = 2, nodeCount = 50, relationCount = 100, attributeGenerators = baseGenerators) {
     this.layerCount = layerCount;
     this.nodeCount = Math.max(nodeCount, layerCount);

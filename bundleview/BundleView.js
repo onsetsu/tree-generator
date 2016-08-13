@@ -10,7 +10,7 @@
 * <li><a href="./BundleView/Relation.html">Relation</a></li>
 * </ul>
 **/
-BundleView = function( container, options ) {
+var BundleView = function( container, options ) {
 
   options = options || {}
   // A BundleView may be given several options on initialization:
@@ -768,3 +768,5 @@ BundleView.prototype.layerPadding = function() { return this._layerPadding; };
 BundleView.prototype.nodePadding = function() { return this._nodePadding; };
 BundleView.prototype.bundlingStrength = function() { return this._bundlingStrength; };
 BundleView.prototype.removeLCA = function() { return this._removeLCA; };
+
+export default BundleView;

@@ -9,6 +9,8 @@
 *   parent: An optional parent node. If this is a root node, the parent should be undefined.
 *   label: The 'name' of the node that labeled on it or and displayed in the tooltip.
 **/
+import BundleView from './BundleView.js';
+
 BundleView.Node = function( bundleView, layer, parent, label) {
 
   this._label        = label;

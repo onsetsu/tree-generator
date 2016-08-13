@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8" />
+    <title>Testing the Tree Generator</title>
+
+    <!-- external libraries -->
+    <script src="src/external/system.src.js"></script>
+
+</head>
+<body>
+
+<h1>Testing Tree Generator</h1>
+<p>look at your console</p>
+<script>
+    System.config({
+        transpiler: 'babel',
+        babelOptions: {stage: 0, optional: ['es7.doExpressions']},
+        map: {
+            babel: 'src/external/babel-browser.js'
+        }
+    });
+
+    System.import('index.js');
+</script>
+
+</body>
+</html>

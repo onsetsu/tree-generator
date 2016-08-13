@@ -1,7 +1,7 @@
 /**
  * The LabelGenerator generates a random multipart label.
  */
-class LabelGenerator {
+export default class LabelGenerator {
     /**
      * Takes a list of lists as argument and randomly chooses one element of each list.
      * Then, the chosen elements are concatenated.

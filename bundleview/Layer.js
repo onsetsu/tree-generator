@@ -4,6 +4,8 @@
 * However, you can use it to determain the nodes that belong to a certain layer and the layer's index using the getter functions below.
 * You can get the layer of a node using it's <pre>layer()</pre> getter method. See <a href="./Node.html">Node</a> documentation.
 */
+import BundleView from './BundleView.js';
+
 BundleView.Layer = function( bundleView, parent, child ) {
 
   this._parent     = parent;
